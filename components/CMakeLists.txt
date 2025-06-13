@@ -1,0 +1,26 @@
+# Check AWS IoT dependencies first
+if(CONFIG_AWS_IOT AND NOT CONFIG_FREERTOS)
+    set(CONFIG_FREERTOS 1 CACHE BOOL "FreeRTOS auto-enabled for AWS IoT" FORCE)
+    message(STATUS "AWS IoT: Auto-enabling CONFIG_FREERTOS")
+endif()
+
+add_subdirectory(ai)
+add_subdirectory(crypto)
+add_subdirectory(fs)
+add_subdirectory(graphics)
+add_subdirectory(libc)
+add_subdirectory(lzma)
+add_subdirectory(mm)
+add_subdirectory(net)
+add_subdirectory(os)
+sdk_add_subdirectory_ifdef(CONFIG_IPERF iperf)
+sdk_add_subdirectory_ifdef(CONFIG_SHELL shell)
+add_subdirectory(usb)
+add_subdirectory(utils)
+add_subdirectory(wireless)
+sdk_add_subdirectory_ifdef(CONFIG_MULTIMEDIA multimedia)
+sdk_add_subdirectory_ifdef(CONFIG_EASYFLASH4 easyflash4)
+sdk_add_subdirectory_ifdef(CONFIG_ESP_EVENT esp_event)
+
+# Add subdirectories for AWS IoT if the configuration is enabled
+sdk_add_subdirectory_ifdef(CONFIG_AWS_IOT aws_iot)
