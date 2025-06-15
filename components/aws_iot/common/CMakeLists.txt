@@ -1,0 +1,5 @@
+
+sdk_add_include_directories(logging)
+sdk_add_include_directories(posix_compat)
+
+add_subdirectory(posix_compat)

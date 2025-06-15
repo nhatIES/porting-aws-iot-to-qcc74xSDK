@@ -1,8 +1,13 @@
-# Check AWS IoT dependencies first
+if(CONFIG_AWS_IOT AND NOT CONFIG_MBEDTLS)
+    set(CONFIG_MBEDTLS ON CACHE BOOL "Enable MBEDTLS for AWS IoT" FORCE)
+    message(STATUS "AWS IoT: Auto-enabling CONFIG_MBEDTLS")
+endif()
+
 if(CONFIG_AWS_IOT AND NOT CONFIG_FREERTOS)
     set(CONFIG_FREERTOS 1 CACHE BOOL "FreeRTOS auto-enabled for AWS IoT" FORCE)
     message(STATUS "AWS IoT: Auto-enabling CONFIG_FREERTOS")
 endif()
+
 
 add_subdirectory(ai)
 add_subdirectory(crypto)
@@ -22,5 +27,4 @@ sdk_add_subdirectory_ifdef(CONFIG_MULTIMEDIA multimedia)
 sdk_add_subdirectory_ifdef(CONFIG_EASYFLASH4 easyflash4)
 sdk_add_subdirectory_ifdef(CONFIG_ESP_EVENT esp_event)
 
-# Add subdirectories for AWS IoT if the configuration is enabled
 sdk_add_subdirectory_ifdef(CONFIG_AWS_IOT aws_iot)
